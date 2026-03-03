@@ -1,0 +1,36 @@
+{
+  "name": "dotenv-check",
+  "version": "1.0.0",
+  "description": "Validate .env files. Check required vars, flag issues. Never logs values. Zero deps.",
+  "type": "module",
+  "bin": {
+    "dotenv-check": "./index.js",
+    "envcheck": "./index.js"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "developer-tools",
+    "cli",
+    "nodejs",
+    "zero-dependencies",
+    "dotenv",
+    "environment",
+    "validation",
+    "ci"
+  ],
+  "author": "NickCirv",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickCirv/dotenv-check.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NickCirv/dotenv-check/issues"
+  },
+  "homepage": "https://github.com/NickCirv/dotenv-check#readme"
+}
