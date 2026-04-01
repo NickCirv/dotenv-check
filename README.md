@@ -1,3 +1,5 @@
+![Banner](banner.svg)
+
 # dotenv-check
 
 > Validate .env files. Check required vars, detect issues. Never logs values.
