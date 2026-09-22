@@ -1,59 +1,67 @@
-<div align="center">
+![dotenv-check — Nicholas Ashkar repository collection](assets/nicholas-ashkar/banner.png)
 
 # dotenv-check
 
-**Catch missing or malformed `.env` variables before they crash your app**
+Check an environment file for missing keys, duplicates and selected formatting problems.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?labelColor=0B0A09)](LICENSE)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?labelColor=0B0A09)](package.json)
-[![Node.js ≥18](https://img.shields.io/badge/node-%3E%3D18-339933?labelColor=0B0A09&logo=node.js&logoColor=white)](package.json)
 
-</div>
-
-## Install
-
-```bash
-npx github:NickCirv/dotenv-check
-```
-
-## Usage
-
-```bash
-# Validate .env against .env.example (default)
-envcheck
-
-# Validate a specific env file
-envcheck --env .env.production --example .env.example
-
-# Check explicit required vars
-envcheck --required "DATABASE_URL,REDIS_URL,SECRET_KEY"
-
-# Full audit: format + duplicates + unused
-envcheck --check-format --check-duplicates --unused
-
-# CI mode — exit 1 on any warning
-envcheck --strict
-
-# JSON output for scripting
-envcheck --format json
-```
-
-| Flag | Description |
-|------|-------------|
-| `--env <path>` | `.env` file to validate (default: `.env`) |
-| `--example <path>` | Reference file (default: `.env.example`) |
-| `--required <VARS>` | Comma-separated list of required var names |
-| `--check-format` | Validate key naming, URL/port/boolean formats |
-| `--check-duplicates` | Flag duplicate keys in `.env` |
-| `--unused` | Show vars in `.env` not documented in `.env.example` |
-| `--strict` | Exit 1 on warnings, not just errors |
-| `--format json\|table` | Output format (default: `table`) |
+<a id="usage"></a>
 
 ## What it does
 
-Reads your `.env` and `.env.example` files and reports which required variables are set, missing, or malformed — without ever printing their values. Exit codes are CI-friendly: `0` = all clear, `1` = missing required vars, `2` = parse error. Use `--strict` to block deploys on any warning.
+Compares keys with an example or --required list, supports optional-key annotations, and reports presence without printing values. --check-format enables value-shape checks; --strict makes warning statuses fail. See the pinned [implementation](https://github.com/NickCirv/dotenv-check/blob/5244998863f2a123a2631d47e1ef864bd9af6079/index.js).
 
-Values are **never** logged or output — only variable names and their status.
 
----
-<sub>Zero dependencies · Node ≥18 · MIT · by <a href="https://github.com/NickCirv">NickCirv</a></sub>
+<a id="install"></a>
+
+## Quickstart
+
+Node requirement from the inspected manifest: **`>=20`**. Use sanitized fixtures when sharing reports. A missing input file is an error; a missing example leaves only explicit requirements and local checks.
+
+The following example is **source-inspected, not executed**. It uses a pinned checkout; npm package publication is not assumed. Replace project paths or provide the stated input fixtures before running it.
+
+```bash
+git clone https://github.com/NickCirv/dotenv-check.git
+cd dotenv-check
+git checkout 5244998863f2a123a2631d47e1ef864bd9af6079
+npm install --ignore-scripts
+node index.js --env ../your-project/.env --example ../your-project/.env.example --check-duplicates --format json
+```
+
+Dependencies are installed with lifecycle scripts disabled in this recipe. Read the package scripts before enabling any lifecycle step required by your environment.
+
+## Usage and reference
+
+`dotenv-check` | `envcheck` are the executable names declared by the package. [Command reference](docs/REFERENCE.md) covers source-backed options and entry points.
+
+| Control | Behavior in the inspected implementation |
+| --- | --- |
+| `--env PATH` | Choose the environment file |
+| `--example PATH` | Choose the reference example |
+| `--required LIST` | Supply explicit required keys |
+| `--check-duplicates` | Report duplicate declarations |
+| `--strict` | Fail warning statuses as well as errors |
+
+## Limits and operational notes
+
+This parser is not a full shell or dotenv evaluator. Format findings are reported but the inspected final exit calculation uses missing/parse errors and warning statuses; do not assume every format finding fails CI. Extra means absent from the example, not unused by source code.
+
+## Development
+
+No runtime checks were executed for this documentation review. The committed smoke test checks entrypoint JavaScript syntax; it does not exercise the command behavior.
+
+| Script | Declared command |
+| --- | --- |
+| `test` | `node --test` |
+
+Work from the pinned source, keep changes focused, and reproduce the affected behavior with a small fixture before proposing a change. Existing contribution and security policies remain authoritative where present.
+
+## Research and status
+
+[Research record](docs/RESEARCH.md) identifies the inspected revision, source evidence, documentation disposition and verification gaps. Static inspection supports the descriptions here; runtime behavior, dependency installation and current hosted services remain unverified.
+
+## License and author
+
+[License](https://github.com/NickCirv/dotenv-check/blob/5244998863f2a123a2631d47e1ef864bd9af6079/LICENSE)
+
+[Nicholas Ashkar](https://nicholashkar.com) · Applied AI, systems and consulting.
